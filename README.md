@@ -1,67 +1,91 @@
-# Payload Blank Template
+# Next.js 16 + PayloadCMS + shadcn Starter Kit
 
-This template comes configured with the bare minimum to get started on anything you need.
+Server-first Next.js 16 project with PayloadCMS backend and shadcn/ui components.
 
-## Quick start
+## Stack
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+- **Next.js 16** - App Router, React Server Components
+- **PayloadCMS 3** - Headless CMS with MongoDB
+- **shadcn/ui** - New York style, Tailwind CSS v4
+- **TypeScript** - Strict mode enabled
 
-## Quick Start - local setup
+## Features
 
-To spin up this template locally, follow these steps:
+- Dark mode with `next-themes`
+- Toast notifications with `sonner`
+- AI elements registry (`@ai-elements`)
+- 70+ external component registries
 
-### Clone
+## Quick Start
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+```bash
+# Clone and setup
+git clone <repo-url> my-project
+cd my-project
+cp .env.example .env
 
-### Development
+# Add your MongoDB URL to .env
+# MONGODB_URL=mongodb://...
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+# Install and run
+pnpm install
+pnpm dev
+```
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+Open [http://localhost:3000](http://localhost:3000) and follow on-screen instructions to create your admin user.
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+## Project Structure
 
-#### Docker (Optional)
+```
+src/
+├── app/(frontend)/          # Public pages (RSC)
+├── app/(payload)/           # Admin + API (auto-generated)
+├── collections/             # Payload collections
+├── components/ui/           # shadcn components
+├── components/ai-elements/  # AI SDK components
+├── lib/utils.ts             # cn() utility
+└── payload.config.ts        # Payload config
+```
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+## Commands
 
-To do so, follow these steps:
+```bash
+pnpm dev                  # Start dev server
+pnpm exec tsc --noEmit    # Type check
+pnpm test:int             # Integration tests (Vitest)
+pnpm test:e2e             # E2E tests (Playwright)
+pnpm generate:types       # Regenerate Payload types
+```
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+## Adding Components
 
-## How it works
+Always use shadcn CLI:
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+```bash
+# Add components
+pnpm dlx shadcn@latest add button card dialog
 
-### Collections
+# Search registries
+pnpm dlx shadcn@latest search <query>
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+# View before install
+pnpm dlx shadcn@latest view <component>
 
-- #### Users (Authentication)
+# External registries
+pnpm dlx shadcn@latest add "@magicui/blur-fade"
+```
 
-  Users are auth-enabled collections that have access to the admin panel.
+## Claude Code
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+This project includes `.claude/` with rules for AI-assisted development:
 
-- #### Media
+- `CLAUDE.md` - Project overview and commands
+- `rules/` - Code style, PayloadCMS, shadcn, Next.js, testing guidelines
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+## Docker (Optional)
 
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+```bash
+# Update .env: MONGODB_URL=mongodb://127.0.0.1/mydb
+docker-compose up -d
+pnpm dev
+```
