@@ -82,6 +82,16 @@ This project includes `.claude/` with rules for AI-assisted development:
 - `CLAUDE.md` - Project overview and commands
 - `rules/` - Code style, PayloadCMS, shadcn, Next.js, testing guidelines
 
+### Codemap (Optional)
+
+[Codemap](https://github.com/JordanCoin/codemap) provides automatic codebase context to Claude. Install for enhanced architecture awareness:
+
+```bash
+brew tap JordanCoin/tap && brew install codemap
+```
+
+Windows: `scoop bucket add codemap https://github.com/JordanCoin/scoop-codemap && scoop install codemap`
+
 ## Docker (Optional)
 
 ```bash
