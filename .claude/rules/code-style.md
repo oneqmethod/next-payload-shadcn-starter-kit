@@ -29,10 +29,10 @@ export async function UserCard({ userId }: { userId: string }) {
 }
 
 // Client only when interactive
-'use client'
+;('use client')
 export function Counter() {
   const [count, setCount] = useState(0)
-  return <Button onClick={() => setCount(c => c + 1)}>{count}</Button>
+  return <Button onClick={() => setCount((c) => c + 1)}>{count}</Button>
 }
 ```
 

@@ -71,6 +71,7 @@ export const Posts: CollectionConfig = {
 Auto-generated: `src/payload-types.ts`
 
 Regenerate after collection changes:
+
 ```bash
 pnpm generate:types
 ```
@@ -94,6 +95,7 @@ export default async function Page() {
 ## Use Skill
 
 Before implementing Payload features, run `/payload` for current docs on:
+
 - Access control patterns
 - Hook types and signatures
 - Field configurations

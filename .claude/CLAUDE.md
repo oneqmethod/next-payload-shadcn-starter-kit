@@ -25,6 +25,7 @@ src/
 ## Before Implementing
 
 Use skills for up-to-date docs:
+
 - `/payload` - PayloadCMS patterns, hooks, access control
 - `/shadcn` - Component search, registry lookup
 - `/nextjs` - App Router, RSC, server actions
@@ -36,6 +37,12 @@ Use skills for up-to-date docs:
 - `pnpm test:int` - Vitest integration tests
 - `pnpm test:e2e` - Playwright E2E tests
 - `pnpm generate:types` - Regenerate Payload types
+
+### shadcn CLI (prefer over manual install)
+
+- `pnpm dlx shadcn@latest add <component>` - Add component
+- `pnpm dlx shadcn@latest search <query>` - Search registries
+- `pnpm dlx shadcn@latest view <component>` - View before install
 
 ## Rules
 

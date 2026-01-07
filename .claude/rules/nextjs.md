@@ -3,6 +3,7 @@
 ## Server-First Approach
 
 RSC by default. Client components only for:
+
 - Event handlers (onClick, onChange)
 - Browser APIs (localStorage, window)
 - Hooks (useState, useEffect)
@@ -15,7 +16,7 @@ export default async function PostsPage() {
 }
 
 // components/LikeButton.tsx - Client
-'use client'
+;('use client')
 export function LikeButton({ postId }: { postId: string }) {
   const [liked, setLiked] = useState(false)
   return <Button onClick={() => setLiked(!liked)}>Like</Button>
@@ -101,6 +102,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 ## Use Skill
 
 Run `/nextjs` for:
+
 - Route debugging
 - Error investigation
 - Cache issues
