@@ -1,0 +1,7 @@
+{
+  "enabledPlugins": {
+    "payload@payload-marketplace": true,
+    "shadcn@oneq-skills": true,
+    "nextjs@oneq-skills": true
+  }
+}
