@@ -8,12 +8,19 @@
     "SessionStart": [
       {
         "hooks": [{ "type": "command", "command": "codemap hook session-start" }]
+      },
+      {
+        "hooks": [{ "type": "command", "command": "bd prime" }]
       }
     ],
     "PreToolUse": [
       {
         "matcher": "Edit|Write",
         "hooks": [{ "type": "command", "command": "codemap hook pre-edit" }]
+      },
+      {
+        "matcher": "Bash(git push*)",
+        "hooks": [{ "type": "command", "command": ".claude/hooks/enforce-bd-workflow.sh" }]
       }
     ],
     "PostToolUse": [
@@ -33,6 +40,9 @@
     "PreCompact": [
       {
         "hooks": [{ "type": "command", "command": "codemap hook pre-compact" }]
+      },
+      {
+        "hooks": [{ "type": "command", "command": "bd prime" }]
       }
     ],
     "SessionEnd": [
