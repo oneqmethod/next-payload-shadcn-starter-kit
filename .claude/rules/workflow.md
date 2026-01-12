@@ -1,11 +1,18 @@
 # Workflow (MANDATORY)
 
-1. Plan first
-2. `bd create "title"` for each task
-3. `bd update <id> --status in_progress`
-4. Implement ONE issue at a time
-5. `bd close <id>` when done
-6. Session end: `bd sync && git commit && git push`
+## Planning Phase
+
+- Spin up Explore agents in parallel for context gathering
+- No limit on agents - use as many as needed for independent research paths
+- Monitor context consumption; agents return summaries
+
+## Implementation Phase
+
+1. `bd create "title"` for each task
+2. `bd update <id> --status in_progress`
+3. Implement ONE issue at a time
+4. `bd close <id>` when done
+5. Session end: `bd sync && git commit && git push`
 
 **VIOLATIONS:**
 
