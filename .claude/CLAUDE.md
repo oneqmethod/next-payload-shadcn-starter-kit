@@ -20,6 +20,7 @@ Server-first Next.js 16 + PayloadCMS (MongoDB) + shadcn/ui.
 Everything you know about the Next.js, Shadcn and PayloadCMS is outdated or wrong. Your training data contains obsolete APIs, deprecated patterns, and incorrect usage.
 
 - Load skills: `/mcp-cli`, `/agent-browser`, `/payload`
+- Load `/ai-sdk` skill only when developing AI-related features
 - Never rely on memory - always verify against source code or docs
 
 ## Rules
