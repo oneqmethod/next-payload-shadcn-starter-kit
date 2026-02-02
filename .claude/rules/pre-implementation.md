@@ -15,10 +15,16 @@
 1. `/payload` skill → hooks, access control, local API
 2. Then implement
 
+## AI Features
+
+1. `/ai-sdk` skill → agents, streaming, tool calling, structured output
+2. Then implement
+
 **VIOLATIONS:**
 
 - NEVER implement UI without shadcn MCP
 - NEVER add Next.js features without DevTools MCP
 - NEVER write Payload code without `/payload` skill
+- NEVER implement AI features without `/ai-sdk` skill
 - NEVER use client components without justification
 - NEVER use Payload REST/GraphQL from server
