@@ -8,7 +8,8 @@
 ## Next.js Features
 
 1. `/mcp-cli` → Next.js DevTools MCP → docs/best practices
-2. Then implement
+2. `/next-best-practices` skill → best practices, performance, security
+3. Then implement
 
 ## PayloadCMS
 
