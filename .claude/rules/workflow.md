@@ -29,7 +29,10 @@ CRITICAL: Gather information BEFORE planning.
 2. Claim task: TaskUpdate with status=in_progress
 3. Implement ONE task at a time
 4. Complete: TaskUpdate with status=completed
-5. Session end: `git commit && git push`
+
+## After Each Task
+
+Once implementation is verified (type check passes), commit and push immediately.
 
 **VIOLATIONS:**
 
@@ -38,4 +41,3 @@ CRITICAL: Gather information BEFORE planning.
 - NEVER assume training data is current
 - NEVER edit code without claimed task (status=in_progress)
 - NEVER leave tasks in_progress at session end
-- NEVER end session without `git push`
