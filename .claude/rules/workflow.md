@@ -1,4 +1,19 @@
+---
+paths:
+  - "**/*"
+---
+
 # Workflow (MANDATORY)
+
+## Research Phase (FIRST)
+
+CRITICAL: Gather information BEFORE planning.
+
+1. Identify frameworks/tools involved
+2. Load required skills (`/payload`, `/next-best-practices`, `/ai-sdk`)
+3. Use MCP tools to search docs
+4. READ outputs - don't assume
+5. THEN proceed to planning
 
 ## Planning Phase
 
@@ -18,6 +33,9 @@
 
 **VIOLATIONS:**
 
+- NEVER skip research phase
+- NEVER implement without consulting skills/tools
+- NEVER assume training data is current
 - NEVER edit code without claimed task (status=in_progress)
 - NEVER leave tasks in_progress at session end
 - NEVER end session without `git push`
