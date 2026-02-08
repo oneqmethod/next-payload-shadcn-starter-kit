@@ -8,5 +8,41 @@
       "Write(.env)",
       "Write(.env.*)"
     ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/require-research.sh \"$PROMPT\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); if [ \"$(echo \"$INPUT\" | jq -r '.stop_hook_active')\" = 'true' ]; then exit 0; fi; pnpm exec tsc --noEmit 2>&1; TSC=$?; pnpm lint 2>&1; LINT=$?; [ $TSC -eq 0 ] && [ $LINT -eq 0 ]",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
   }
 }
