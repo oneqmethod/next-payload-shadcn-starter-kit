@@ -3,6 +3,7 @@ import React from 'react'
 import { DirectionProvider } from '@/components/ui/direction'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
+import { AgentationDevTool } from '@/components/agentation-dev-tool'
 
 import './styles.css'
 
@@ -23,6 +24,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider>
             <main>{children}</main>
             <Toaster />
+            <AgentationDevTool />
           </ThemeProvider>
         </DirectionProvider>
       </body>
