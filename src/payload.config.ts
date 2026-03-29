@@ -7,7 +7,6 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { payloadEventsPlugin } from '@/plugins/payload-events'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const filename = fileURLToPath(import.meta.url)
@@ -31,7 +30,6 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    payloadEventsPlugin({ admin: { hidden: false }, pollIntervalMs: 500 }),
     vercelBlobStorage({
       collections: {
         media: true,

@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { ThemeToggle } from '@/components/theme-toggle'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
 import config from '@/payload.config'
 
 export default async function HomePage() {
@@ -37,12 +37,12 @@ export default async function HomePage() {
           <CardDescription>Get started by exploring the admin panel or docs.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
-          <Button asChild>
+          <Button>
             <a href={payloadConfig.routes.admin} rel="noopener noreferrer" target="_blank">
               Go to admin panel
             </a>
           </Button>
-          <Button variant="outline" asChild>
+          <Button variant="outline">
             <a href="https://payloadcms.com/docs" rel="noopener noreferrer" target="_blank">
               Documentation
             </a>

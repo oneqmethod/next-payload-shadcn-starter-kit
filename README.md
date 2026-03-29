@@ -13,13 +13,12 @@ Server-first Next.js 16 project with PayloadCMS backend, shadcn/ui components, a
 ## Features
 
 - Cookie-based authentication with protected routes
-- Real-time events plugin (SSE streaming)
 - Dark mode with `next-themes`
 - RTL support with `DirectionProvider`
 - Toast notifications with `sonner`
-- AI elements registry (`@ai-elements`) — 29 components
 - Vercel Blob media storage
 - Lexical rich text editor
+- Agentation webhook integration
 
 ## Quick Start
 
@@ -33,8 +32,8 @@ cp .env.example .env
 # PAYLOAD_SECRET=your-secret
 # BLOB_READ_WRITE_TOKEN=your-token (optional, for Vercel Blob)
 
-pnpm install
-pnpm dev
+bun install
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) and follow on-screen instructions to create your admin user.
@@ -43,28 +42,39 @@ Open [http://localhost:3000](http://localhost:3000) and follow on-screen instruc
 
 ```
 src/
-├── app/(frontend)/               # Public pages (RSC)
-│   ├── page.tsx                  # Home page
-│   ├── login/                    # Login page + server actions
-│   │   ├── page.tsx              # Redirects if already authenticated
-│   │   ├── login-form.tsx        # Client form component
-│   │   └── actions.ts            # login, logout, getCurrentUser
-│   └── (protected)/              # Auth-required route group
-│       └── dashboard/page.tsx    # Protected dashboard
-├── app/(payload)/                # Admin panel + API (auto-generated)
-│   ├── admin/[[...segments]]/    # Payload admin UI
-│   └── api/[...slug]/            # Payload REST + GraphQL API
+├── app/
+│   ├── (frontend)/               # Public pages (RSC)
+│   │   ├── page.tsx              # Home page
+│   │   ├── layout.tsx            # Frontend layout
+│   │   ├── styles.css            # Frontend styles
+│   │   ├── login/                # Login page + server actions
+│   │   │   ├── page.tsx          # Redirects if already authenticated
+│   │   │   ├── login-form.tsx    # Client form component
+│   │   │   └── actions.ts        # login, logout, getCurrentUser
+│   │   └── (protected)/          # Auth-required route group
+│   │       └── dashboard/page.tsx
+│   ├── (payload)/                # Admin panel + API (auto-generated)
+│   │   ├── admin/[[...segments]]/
+│   │   └── api/
+│   │       ├── [...slug]/route.ts      # Payload REST API
+│   │       ├── graphql/route.ts
+│   │       └── graphql-playground/route.ts
+│   └── api/
+│       └── agentation/webhook/route.ts # Agentation webhook
 ├── collections/
 │   ├── Users.ts                  # Auth-enabled user collection
 │   └── Media.ts                  # Upload collection (Vercel Blob)
 ├── components/
-│   ├── ui/                       # shadcn components
-│   └── ai-elements/              # AI SDK components
-├── plugins/
-│   └── payload-events/           # Real-time SSE events plugin
-├── lib/utils.ts                  # cn() utility
+│   ├── ui/                       # shadcn components (50+)
+│   ├── agentation-dev-tool.tsx   # Agentation visual feedback
+│   └── theme-provider.tsx        # next-themes provider
+├── hooks/
+│   └── use-mobile.ts            # Mobile detection hook
+├── lib/
+│   └── utils.ts                  # cn() utility
 ├── proxy.ts                      # Route protection (token check)
-└── payload.config.ts             # Payload config
+├── payload.config.ts             # Payload config
+└── payload-types.ts              # Generated Payload types
 ```
 
 ## Authentication
@@ -145,54 +155,6 @@ export default async function DashboardPage() {
 
 ## Plugins
 
-### Payload Events Plugin
-
-Real-time event system using Server-Sent Events (SSE). Located in `src/plugins/payload-events/`.
-
-**What it does:**
-
-- Auto-broadcasts CRUD events for all collections (`collection.create`, `collection.update`, `collection.delete`)
-- Custom event publishing via `publish()` server action
-- SSE endpoint at `/api/_events/stream`
-- Automatic cleanup (events expire after 1 hour)
-
-**Server — Configuration** (`payload.config.ts`):
-
-```typescript
-import { payloadEventsPlugin } from '@/plugins/payload-events'
-
-plugins: [
-  payloadEventsPlugin({
-    admin: { hidden: false }, // Show in admin panel
-    pollIntervalMs: 500, // SSE polling interval
-    // collections: ['users'],  // Limit to specific collections (default: all)
-    // retentionMs: 3600000,    // Event retention (default: 1 hour)
-  }),
-]
-```
-
-**Client — Subscribe to events:**
-
-```typescript
-import { usePayloadEvents } from '@/plugins/payload-events/client'
-
-const { subscribe, connectionStatus } = usePayloadEvents()
-
-useEffect(() => {
-  return subscribe('users.update', (event) => {
-    console.log('User updated:', event.payload)
-  })
-}, [subscribe])
-```
-
-**Server — Publish custom events:**
-
-```typescript
-import { publish } from '@/plugins/payload-events/client'
-
-await publish('my-custom-event', { message: 'Hello' })
-```
-
 ### Vercel Blob Storage
 
 Media uploads stored in Vercel Blob. Configured in `payload.config.ts`:
@@ -211,12 +173,12 @@ plugins: [
 ## Commands
 
 ```bash
-pnpm dev                  # Start dev server
-pnpm build                # Build for production
-pnpm exec tsc --noEmit    # Type check
-pnpm test:int             # Integration tests (Vitest)
-pnpm test:e2e             # E2E tests (Playwright)
-pnpm generate:types       # Regenerate Payload types
+bun dev                   # Start dev server
+bun run build             # Build for production
+bunx tsc --noEmit         # Type check
+bun test:int              # Integration tests (Vitest)
+bun test:e2e              # E2E tests (Playwright)
+bun generate:types        # Regenerate Payload types
 ```
 
 ## Adding Components
@@ -225,19 +187,16 @@ Use shadcn CLI:
 
 ```bash
 # Add components
-pnpm dlx shadcn@latest add button card dialog
+bunx shadcn@latest add button card dialog
 
 # Search registries
-pnpm dlx shadcn@latest search <query>
+bunx shadcn@latest search <query>
 
 # View before install
-pnpm dlx shadcn@latest view <component>
+bunx shadcn@latest view <component>
 
 # External registries
-pnpm dlx shadcn@latest add "@magicui/blur-fade"
-
-# AI elements
-pnpm dlx shadcn@latest add "@ai-elements/prompt-input"
+bunx shadcn@latest add "@magicui/blur-fade"
 ```
 
 ## Environment Variables
@@ -253,15 +212,15 @@ pnpm dlx shadcn@latest add "@ai-elements/prompt-input"
 ```bash
 # Update .env: DATABASE_URL=mongodb://127.0.0.1/mydb
 docker-compose up -d
-pnpm dev
+bun dev
 ```
 
 Docker Compose includes MongoDB and an optional (commented-out) PostgreSQL service.
 
 ## Claude Code
 
-This project includes `.claude/` with rules for AI-assisted development:
+This project includes `.claude/` for AI-assisted development:
 
-- `CLAUDE.md` — Project overview and commands
-- `rules/` — Workflow, pre-implementation checklist
-- `skills/` — Payload, Next.js, AI SDK, MCP CLI reference docs
+- `CLAUDE.md` — Project overview, commands, workflow rules
+- `hooks/` — Pre-implementation skill enforcement
+- `settings.json` — Permissions, formatting hooks, type checking
